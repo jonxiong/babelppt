@@ -7,7 +7,7 @@ plugins:
 
 <slide class="aligncenter">
 
-# babel {.text-landing.text-shadow}
+# babel浅析 {.text-landing.text-shadow}
 
 By xiongyang {.text-intro}
 
@@ -15,7 +15,7 @@ By xiongyang {.text-intro}
 
 :::note
 babel\`beibl\
-大家好今天给大家分享我对babel一个初步的理解，有什么疑问的地方大家可以一起探讨
+大家好今天给大家分享我对babel一个初步的理解 有什么疑问的地方大家可以一起探讨
 :::
 
 <slide class="aligncenter">
@@ -31,6 +31,7 @@ babel\`beibl\
 ![](http://image.gxx365.com/babel.jpeg)
 
 ---
+### Babel的历史
 
 Babel的原意指得是人类为了见到上帝，准备建造的一座通天塔(babel)，上帝为了阻止人类，让他们语言变的不同。于是，人类开始有了文化差异，从而导致了冲突，塔也就建不起来了……
 ==旧约圣经==
@@ -51,7 +52,7 @@ Babel的原意 指得是人类为了见到上帝，准备建造一座通天塔�
 
 {.text-subtitle}
 
-## 什么是 Babel
+## 什么是 Babel ?
 
 ### Babel is a JavaScript compiler {.tobuild.fadeInLeft}
 
@@ -98,6 +99,10 @@ Babel的原意 指得是人类为了见到上帝，准备建造一座通天塔�
 将转换之后的语法树重新生成代码
 
 :::
+
+---
+
+注意babel本身不具有任何转化功能，它把转化的功能都分解到插件里面。因此当我们不配置任何插件时，经过babel的代码和输入是相同的
 
 :::note
 
@@ -186,9 +191,17 @@ plugins 和 presets
 
 ### Babel的处理流程
 
-- AST
+分别与前面的处理步骤对应起来
+
+1. 解析：对源代码词法分析和语法分析
+2. 转换：遍历AST并应用转换器增删改查AST节点
+3. 生成：将更改后的AST转换为源代码
+
 
 [:fa-github: AST](https://astexplorer.net/#/Z1exs6BWMq){.button.ghost}
+
+在我们开发中例如：代码压缩、代码高亮，css预处理器、eslint等其实都是基于AST来实现的，所以还是很有必要的了解一下AST
+
 :::
 
 :::note
@@ -222,12 +235,12 @@ AST 是 Babel 转译的核心数据结构，后续的操作都依赖于 AST -->
 :::{.content-center}
 ## 一：解析 (Parsing)
 
-将代码解析成抽象语法树（AST），每个js引擎（比如V8引擎）都有自己的AST解析器
+> 将代码解析成抽象语法树（AST），每个js引擎（比如V8引擎）都有自己的AST解析器
 
-- ### 词法分析
-- ### 语法解析
+- 1. 词法分析：可以看成是对代码进行“分词”，它接收一段源代码，执行一个函数把代码分割成被称为Tokens（令牌） ，令牌类似于AST中节点；
+- 2. 语法解析：通过语法分析把 Tokens 转化为上面提到过的 AST
   
-### Babylon
+#### Babel中的解析器：Babylon
 
 :::
 
@@ -254,7 +267,7 @@ Babel中用的解析器是babylon/`baibilen/ 我们来体验一下：
 
 在这个阶段，Babel接收得到AST并对其进行深度优先遍历，在此过程中对节点进行添加、更新及移除操作。这部分也是Babel插件介入工作的部分
 
-### babel-traverse
+#### Babel中的转换器：babel-traverse
 
 :::
 
@@ -278,7 +291,7 @@ Babel中的babel-traverse就是用来做转换的,继续看下demo
 
 经过上面两个阶段，需要转译的代码已经经过转换，生成了新的AST，最后一个阶段就是根据这个AST来生成代码
 
-### babel-generator
+#### Babel中的生成器：babel-generator
 
 :::
 
@@ -288,9 +301,21 @@ Babel中的babel-traverse就是用来做转换的,继续看下demo
 
 在code字段里，我们可以看到里面新生成的代码
 
-上面讲的这几个库，还有更多细节，有兴趣的同学可以再细入研究
 
+<slide class="aligncenter">
+
+## Babel
+
+----
+
+!![figure](https://user-gold-cdn.xitu.io/2019/7/15/16bf5d73baa1a11a?imageView2/0/w/1280/h/960/format/webp/ignore-error/1 .aligncenter)
+
+---
+
+上面讲的这几个库，还有更多细节，有兴趣的同学可以再细入研究
 最后 这些库的集合实现了的这一整套流程，就是我们的Babel
+
+:::
 
 <slide class="bg-black aligncenter" image="https://source.unsplash.com/UJbHNoVPZW0/ .dark">
 
